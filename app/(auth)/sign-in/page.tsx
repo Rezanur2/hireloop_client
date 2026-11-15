@@ -13,19 +13,41 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { signIn } from "@/lib/auth-client"
+import { useRouter } from "next/navigation"
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter()
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData.entries())
-    console.log("Data From the form", data)
+    const user = Object.fromEntries(formData.entries()) as {
+      email: string
+      password: string
+    }
+
+    const { data: signInResponse, error } = await signIn.email({
+      email: user.email,
+      password: user.password,
+      rememberMe: true,
+      callbackURL: "/",
+    })
+
+    if (signInResponse) {
+      router.push("/")
+    }
+    if (error) {
+      console.error(error.message || "Login failed")
+    }
   }
 
   const handleGoogleSignIn = async () => {
-    console.log("Google Sign In clicked")
+    await signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    })
   }
 
   return (
@@ -64,7 +86,7 @@ export default function SignInPage() {
             <span className="relative bg-[#18181b] px-3 uppercase tracking-wider">or</span>
           </div>
 
-          <form onSubmit={onSubmit} className="space-y-4">
+          <form onSubmit={handleSignIn} className="space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="email">Email</Label>
               <Input

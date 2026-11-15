@@ -36,9 +36,10 @@ export default function SignUpPage() {
       return
     }
 
-    const { confirmPassword, ...userData } = user
     const { data, error } = await signUp.email({
-      ...userData,
+      name: user.name,
+      email: user.email,
+      password: user.password,
       callbackURL: "/sign-in",
     })
 
