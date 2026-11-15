@@ -55,10 +55,10 @@ export function Navbar() {
 
           <span className="h-4 w-px bg-zinc-700/60" />
 
-          <Link href="/login" className="text-sm font-medium text-indigo-400 hover:text-indigo-300">
+          <Link href="/sign-in" className="text-sm font-medium text-indigo-400 hover:text-indigo-300">
             Sign In
           </Link>
-          <Link href="/register" className="rounded-xl bg-[#5b54f6] px-4 py-2 text-sm font-medium text-white shadow-md hover:bg-[#4f46e5]">
+          <Link href="/sign-up" className="rounded-xl bg-[#5b54f6] px-4 py-2 text-sm font-medium text-white shadow-md hover:bg-[#4f46e5]">
             Get Started
           </Link>
         </div>
@@ -100,10 +100,10 @@ export function Navbar() {
             <div className="my-2 h-px w-full bg-zinc-800" />
 
             <div className="flex flex-col gap-2.5 pt-1">
-              <Link href="/login" onClick={close} className="w-full rounded-lg px-3 py-2 text-center text-sm font-medium text-indigo-400 hover:text-indigo-300">
+              <Link href="/sign-in" onClick={close} className="w-full rounded-lg px-3 py-2 text-center text-sm font-medium text-indigo-400 hover:text-indigo-300">
                 Sign In
               </Link>
-              <Link href="/register" onClick={close} className="w-full rounded-xl bg-[#5b54f6] py-2.5 text-center text-sm font-medium text-white shadow-md hover:bg-[#4f46e5]">
+              <Link href="/sign-up" onClick={close} className="w-full rounded-xl bg-[#5b54f6] py-2.5 text-center text-sm font-medium text-white shadow-md hover:bg-[#4f46e5]">
                 Get Started
               </Link>
             </div>
