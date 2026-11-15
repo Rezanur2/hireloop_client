@@ -19,23 +19,34 @@ export function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-50 w-full px-4 pt-5 sm:px-8"
+      className="sticky top-0 z-50 w-full -mb-20 px-4 pt-5 sm:-mb-24 sm:px-8"
       onKeyDown={(e) => e.key === "Escape" && close()}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between">
+      <div className="mx-auto flex max-w-7xl items-center justify-between  rounded-2xl border border-zinc-800/80 bg-[#18181b]/90 px-6 py-2.5 mb-7 shadow-lg backdrop-blur">
         {/* Logo */}
         <Link href="/" onClick={close}>
-          <Image src="/logo.png" alt="HireLoop" width={130} height={36} className="h-8 w-auto object-contain" priority />
+          <Image
+            src="/images/logo.png"
+            alt="HireLoop"
+            width={130}
+            height={36}
+            className="h-8 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-6 rounded-2xl border border-zinc-800/80 bg-[#18181b]/90 px-6 py-2.5 shadow-lg backdrop-blur">
+        <div className="hidden md:flex items-center gap-6">
           <nav className="flex items-center gap-6 text-sm">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={pathname === link.href ? "font-medium text-white underline underline-offset-8 decoration-zinc-400" : "text-zinc-400 hover:text-white"}
+                className={
+                  pathname === link.href
+                    ? "font-medium text-white underline underline-offset-8 decoration-zinc-400"
+                    : "text-zinc-400 hover:text-white"
+                }
               >
                 {link.label}
               </Link>
@@ -75,7 +86,11 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={close}
-                  className={pathname === link.href ? "rounded-lg px-3 py-2 text-white underline underline-offset-4 decoration-zinc-400" : "rounded-lg px-3 py-2 text-zinc-400 hover:bg-zinc-800/60 hover:text-white"}
+                  className={
+                    pathname === link.href
+                      ? "rounded-lg px-3 py-2 text-white underline underline-offset-4 decoration-zinc-400"
+                      : "rounded-lg px-3 py-2 text-zinc-400 hover:bg-zinc-800/60 hover:text-white"
+                  }
                 >
                   {link.label}
                 </Link>
