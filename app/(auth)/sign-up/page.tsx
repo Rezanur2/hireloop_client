@@ -2,8 +2,9 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff, Users, User, Shield } from "lucide-react"
 import { signIn, signUp } from "@/lib/auth-client"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,8 +17,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+const roles = [
+  { id: "seeker", label: "Job Seeker", icon: Users },
+  { id: "recruiter", label: "Recruiter", icon: User },
+  { id: "admin", label: "Admin", icon: Shield },
+] as const
+
 export default function SignUpPage() {
   const router = useRouter()
+  const [role, setRole] = useState<"seeker" | "recruiter" | "admin">("seeker")
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -27,6 +35,7 @@ export default function SignUpPage() {
     const user = Object.fromEntries(formData.entries()) as {
       name: string
       email: string
+      role: "seeker" | "recruiter" | "admin"
       password: string
       confirmPassword: string
     }
@@ -40,6 +49,7 @@ export default function SignUpPage() {
       name: user.name,
       email: user.email,
       password: user.password,
+      role: user.role,
       callbackURL: "/sign-in",
     })
 
@@ -61,13 +71,23 @@ export default function SignUpPage() {
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-4 pt-24 pb-12">
       {/* Ambient background glow */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_35%,rgba(147,51,234,0.15),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_35%,rgba(91,84,246,0.15),transparent_70%)]" />
 
       <Card className="relative z-10 w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Sign Up</CardTitle>
-          <CardDescription>
-            Create an account to get started with HireLoop
+        <CardHeader className="text-center pb-4">
+          <Image
+            src="/images/logo.png"
+            alt="HireLoop"
+            width={120}
+            height={32}
+            className="mx-auto mb-3 h-7 w-auto object-contain"
+            priority
+          />
+          <CardTitle className="text-2xl font-bold tracking-tight text-white">
+            Create your account
+          </CardTitle>
+          <CardDescription className="text-xs text-zinc-400 sm:text-sm">
+            Three minutes to set up. Matches start arriving today.
           </CardDescription>
         </CardHeader>
 
@@ -76,7 +96,7 @@ export default function SignUpPage() {
             type="button"
             variant="outline"
             onClick={handleGoogleSignIn}
-            className="w-full gap-2 rounded-xl border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/80 text-white"
+            className="w-full gap-2 rounded-lg border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/80 text-white"
           >
             <svg className="size-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -95,6 +115,32 @@ export default function SignUpPage() {
           </div>
 
           <form onSubmit={handleSignUp} className="space-y-4">
+            {/* Role Selection UI matching user screenshot */}
+            <div className="space-y-1.5">
+              <Label className="text-xs font-medium text-zinc-300">Joining HireLoop as</Label>
+              <div className="grid grid-cols-3 gap-2.5">
+                {roles.map(({ id, label, icon: Icon }) => {
+                  const isSelected = role === id
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => setRole(id)}
+                      className={`flex flex-col items-center justify-center gap-1.5 rounded-lg py-3 px-2 text-center transition-all ${
+                        isSelected
+                          ? "border-2 border-[#5b54f6] bg-[#5b54f6]/10 text-white shadow-sm shadow-[#5b54f6]/20"
+                          : "border border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
+                      }`}
+                    >
+                      <Icon className={`size-5 ${isSelected ? "text-[#5b54f6]" : "text-zinc-400"}`} />
+                      <span className="text-xs font-medium">{label}</span>
+                    </button>
+                  )
+                })}
+              </div>
+              <input type="hidden" name="role" value={role} />
+            </div>
+
             <div className="space-y-1.5">
               <Label htmlFor="name">Full Name</Label>
               <Input
@@ -162,15 +208,15 @@ export default function SignUpPage() {
 
             <Button
               type="submit"
-              className="w-full rounded-xl bg-violet-600 font-medium text-white shadow-lg shadow-violet-600/20 hover:bg-violet-500"
+              className="w-full rounded-lg bg-[#5b54f6] py-5 font-medium text-white shadow-md shadow-[#5b54f6]/25 hover:bg-[#4f46e5]"
             >
-              Sign Up
+              Create account
             </Button>
           </form>
 
           <p className="pt-2 text-center text-xs text-zinc-400">
             Already have an account?{" "}
-            <Link href="/sign-in" className="font-medium text-violet-400 hover:text-violet-300 hover:underline">
+            <Link href="/sign-in" className="font-medium text-[#5b54f6] hover:text-[#4f46e5] hover:underline">
               Sign in
             </Link>
           </p>

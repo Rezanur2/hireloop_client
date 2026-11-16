@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -53,12 +54,22 @@ export default function SignInPage() {
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-4 pt-24 pb-12">
       {/* Ambient background glow */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_35%,rgba(147,51,234,0.15),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_35%,rgba(91,84,246,0.15),transparent_70%)]" />
 
       <Card className="relative z-10 w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Sign In</CardTitle>
-          <CardDescription>
+        <CardHeader className="text-center pb-4">
+          <Image
+            src="/images/logo.png"
+            alt="HireLoop"
+            width={120}
+            height={32}
+            className="mx-auto mb-3 h-7 w-auto object-contain"
+            priority
+          />
+          <CardTitle className="text-2xl font-bold tracking-tight text-white">
+            Sign In
+          </CardTitle>
+          <CardDescription className="text-xs text-zinc-400 sm:text-sm">
             Welcome back! Please enter your details
           </CardDescription>
         </CardHeader>
@@ -68,7 +79,7 @@ export default function SignInPage() {
             type="button"
             variant="outline"
             onClick={handleGoogleSignIn}
-            className="w-full gap-2 rounded-xl border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/80 text-white"
+            className="w-full gap-2 rounded-lg border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/80 text-white"
           >
             <svg className="size-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -103,7 +114,7 @@ export default function SignInPage() {
                 <Label htmlFor="password">Password</Label>
                 <Link
                   href="#forgot-password"
-                  className="text-xs text-violet-400 hover:text-violet-300 hover:underline"
+                  className="text-xs text-[#5b54f6] hover:text-[#4f46e5] hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -130,7 +141,7 @@ export default function SignInPage() {
 
             <Button
               type="submit"
-              className="w-full rounded-xl bg-violet-600 font-medium text-white shadow-lg shadow-violet-600/20 hover:bg-violet-500"
+              className="w-full py-5 rounded-lg bg-[#5b54f6] font-medium text-white shadow-md shadow-[#5b54f6]/25 hover:bg-[#4f46e5]"
             >
               Sign In
             </Button>
@@ -138,7 +149,7 @@ export default function SignInPage() {
 
           <p className="pt-2 text-center text-xs text-zinc-400">
             Don&apos;t have an account?{" "}
-            <Link href="/sign-up" className="font-medium text-violet-400 hover:text-violet-300 hover:underline">
+            <Link href="/sign-up" className="font-medium text-[#5b54f6] hover:text-[#4f46e5] hover:underline">
               Sign up
             </Link>
           </p>
