@@ -38,9 +38,10 @@ export default function SignInPage() {
 
     if (signInResponse) {
       router.push("/")
+      router.refresh()
     }
     if (error) {
-      console.error(error.message || "Login failed")
+      alert(error.message || "Login failed")
     }
   }
 

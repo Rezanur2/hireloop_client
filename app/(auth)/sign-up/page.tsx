@@ -50,14 +50,16 @@ export default function SignUpPage() {
       email: user.email,
       password: user.password,
       role: user.role,
-      callbackURL: "/sign-in",
+      callbackURL: "/",
     })
 
     if (data) {
-      router.push("/sign-in")
+      router.push("/")
+      router.refresh()
     }
     if (error) {
       console.error(error.message || "Registration failed")
+      alert(error.message || "Registration failed")
     }
   }
 
@@ -126,10 +128,10 @@ export default function SignUpPage() {
                       key={id}
                       type="button"
                       onClick={() => setRole(id)}
-                      className={`flex flex-col items-center justify-center gap-1.5 rounded-lg py-3 px-2 text-center transition-all ${
+                      className={`flex flex-col items-center justify-center gap-1.5 rounded-lg py-3 px-2 text-center transition-colors border-2 ${
                         isSelected
-                          ? "border-2 border-[#5b54f6] bg-[#5b54f6]/10 text-white shadow-sm shadow-[#5b54f6]/20"
-                          : "border border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
+                          ? "border-[#5b54f6] bg-[#5b54f6]/10 text-white shadow-sm shadow-[#5b54f6]/20"
+                          : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
                       }`}
                     >
                       <Icon className={`size-5 ${isSelected ? "text-[#5b54f6]" : "text-zinc-400"}`} />
@@ -142,11 +144,11 @@ export default function SignUpPage() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Full name</Label>
               <Input
                 id="name"
                 name="name"
-                placeholder="John Doe"
+                placeholder="Jane Doe"
                 required
               />
             </div>
@@ -208,7 +210,7 @@ export default function SignUpPage() {
 
             <Button
               type="submit"
-              className="w-full rounded-lg bg-[#5b54f6] py-5 font-medium text-white shadow-md shadow-[#5b54f6]/25 hover:bg-[#4f46e5]"
+              className="w-full rounded-lg bg-[#5b54f6] font-medium text-white shadow-md shadow-[#5b54f6]/25 hover:bg-[#4f46e5]"
             >
               Create account
             </Button>
