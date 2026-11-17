@@ -7,17 +7,19 @@ import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { signOut, useSession } from "@/lib/auth-client"
 
-const navLinks = [
-  { label: "Browse Jobs", href: "/jobs" },
-  { label: "Company", href: "/companies" },
-  { label: "Pricing", href: "/pricing" },
-]
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const close = () => setIsOpen(false)
   const { data: session } = useSession()
+
+  const navLinks = [
+    { label: "Browse Jobs", href: "/jobs" },
+    { label: "Company", href: "/companies" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Dashboard", href: `/dashboard/${session?.user?.role || "seeker"}` },
+  ]
 
   const handleSignOut = async () => {
     await signOut()

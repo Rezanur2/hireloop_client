@@ -76,7 +76,7 @@ export const menuItemsByRole: Record<UserRole, MenuItem[]> = {
     },
     {
       name: "Add Job",
-      url: "/dashboard/recruiter/add-job",
+      url: "/dashboard/recruiter/jobs/new",
       icon: PlusCircle,
     },
     {
@@ -133,8 +133,7 @@ export function DashboardSidebar() {
   const { data: session } = useSession()
   const pathname = usePathname()
 
-  const role = (session?.user?.role as UserRole) || "seeker"
-  const currentMenuItems = menuItemsByRole[role] || menuItemsByRole.seeker
+    const role: UserRole = session?.user?.role || "seeker";
 
   return (
     <Sidebar>
@@ -144,7 +143,7 @@ export function DashboardSidebar() {
         <SidebarGroup />
         <SidebarGroup>
           <SidebarMenu>
-            {currentMenuItems.map((item) => (
+            {menuItemsByRole[role].map((item) => (
               <SidebarMenuItem key={item.name}>
                 <SidebarMenuButton
                   isActive={pathname === item.url}
