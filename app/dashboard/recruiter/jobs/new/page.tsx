@@ -16,8 +16,24 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
+import { createJob } from "@/lib/actions/jobs"
 
-const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Internship"]
+const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Internship"] as const
+
+export type JobFormData = {
+  title: string
+  companyName: string
+  category: string
+  jobType: (typeof JOB_TYPES)[number]
+  isRemote: boolean
+  location: string
+  deadline: string
+  minSalary: string
+  maxSalary: string
+  frequency: string
+  responsibilities: string
+  qualifications: string
+}
 
 const JOB_CATEGORIES = [
   "Engineering & Tech",
@@ -32,7 +48,7 @@ const JOB_CATEGORIES = [
 const FREQUENCIES = ["per hour", "per month", "per year"]
 
 export default function NewJobPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<JobFormData>({
     title: "",
     companyName: "HirePulse Network",
     category: "Engineering & Tech",
@@ -51,8 +67,11 @@ export default function NewJobPage() {
 
   const [submitted, setSubmitted] = useState(false)
 
-  // Simple handler to update fields
-  const handleChange = (field: string, value: string | boolean) => {
+  // Type-safe handler to update fields
+  const handleChange = <K extends keyof JobFormData>(
+    field: K,
+    value: JobFormData[K]
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -60,10 +79,14 @@ export default function NewJobPage() {
   }
 
   // Submit and collect all data
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     console.log("Collected New Job Data:", formData)
     setSubmitted(true)
+  
+    const result = await createJob(formData)
+    console.log('Created Job Result',result);
+
   }
 
   return (
