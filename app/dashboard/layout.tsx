@@ -4,8 +4,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main>
-        <SidebarTrigger />
+      <main className="flex-1 min-w-0 w-full overflow-x-hidden">
+        <div className="p-3">
+          <SidebarTrigger />
+        </div>
         {children}
       </main>
     </SidebarProvider>
